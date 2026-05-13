@@ -227,7 +227,7 @@ def main():
             justify-content: center !important;
             margin-top: -55px !important; /* MENGGUNAKAN MINUS UNTUK MENARIK KE ATAS */
             margin-bottom: 20px !important;
-            margin-left: 30px !important;
+            margin-left: 80px !important;
         }
         
         /* Memaksa warna background dan border tombol */
