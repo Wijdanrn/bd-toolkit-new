@@ -64,7 +64,9 @@ def render_preprocessing():
             y_preview = st.session_state.get("pre_y_test")
     else:
         # when no split, preview the working master or the working X
-        df_preview = st.session_state.get("pre_X_train") or st.session_state.get("df")
+        pre_x = st.session_state.get("pre_X_train")
+        df_master = st.session_state.get("df")
+        df_preview = pre_x if pre_x is not None else df_master
 
     if df_preview is None:
         st.info("No data available for preview.")
@@ -177,8 +179,10 @@ def render_preprocessing():
                                             px = st.session_state.get("pre_X_test")
                                             px.loc[:, sel_cols_scaling] = fitted.transform(px[sel_cols_scaling])
                                             st.session_state["pre_X_test"] = px
-                                else:
-                                    X_local = st.session_state.get("pre_X_train") or st.session_state.get("df")
+                                    else:
+                                        pre_x_local = st.session_state.get("pre_X_train")
+                                        df_master_local = st.session_state.get("df")
+                                        X_local = pre_x_local if pre_x_local is not None else df_master_local
                                     X_local.loc[:, sel_cols_scaling] = fitted.transform(X_local[sel_cols_scaling])
                                     st.session_state["pre_X_train"] = X_local
                                 _record_preprocessing_step({"type": "scaling", "method": scaler_name, "columns": sorted(sel_cols_scaling), "action": action_scale, "target_data": scaling_subsets})
